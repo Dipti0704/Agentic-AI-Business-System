@@ -8,6 +8,12 @@ def ollama_generate(prompt):
     # 👇 ONLY AI TEXT RESPONSE
     return result['response']
 
+def ollama_stream(prompt):
+    stream = generate(model=MODEL_NAME, prompt=prompt, stream=True)
+
+    for chunk in stream:
+        yield chunk['response']
+
 def classify_query(user_input):
     prompt = f"""
     Classify this query into ONE category:

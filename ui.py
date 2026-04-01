@@ -1,48 +1,34 @@
 import streamlit as st
 import requests
 
-# ===================== CONFIG =====================
-API_URL = "http://127.0.0.1:5000/api/ask"
+API_URL = "http://127.0.0.1:5000/api/stream"
 
-st.set_page_config(page_title="Agentic AI Tool", page_icon="🤖", layout="centered")
+st.title("🤖 Agentic AI (Streaming)")
 
-st.title("🤖 Agentic AI Business System")
+user_input = st.text_area("Ask something:")
 
-# ===================== SESSION MEMORY =====================
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# ===================== INPUT =====================
-user_input = st.text_area("💬 Enter your question:", height=120)
-
-col1, col2 = st.columns(2)
-
-# ===================== ASK BUTTON =====================
-if col1.button("🚀 Ask AI"):
+if st.button("Ask AI"):
     if not user_input.strip():
-        st.warning("Please enter a question!")
+        st.warning("Enter question")
     else:
-        with st.spinner("Thinking... 🤖"):
-            try:
-                response = requests.post(
-                    API_URL,
-                    json={
-                        "agent": None,   # 🔥 auto routing
-                        "question": user_input
-                    }
-                )
+        response_placeholder = st.empty()
+        full_response = ""
 
-                data = response.json()
-                answer = data.get("response", "Error occurred")
+        try:
+            with requests.post(API_URL, json={"question": user_input}, stream=True) as res:
+                for chunk in res.iter_content(chunk_size=10):
+                    if chunk:
+                        text = chunk.decode("utf-8")
+                        full_response += text
+                        response_placeholder.markdown(full_response)
 
-                # save to history
-                st.session_state.chat_history.append(("You", user_input))
-                st.session_state.chat_history.append(("AI", answer))
-
-            except Exception as e:
-                st.error(f"Error: {e}")
-
+        except Exception as e:
+            st.error(f"Error: {e}")
 # ===================== CLEAR BUTTON =====================
+col1, col2 = st.columns(2)
 if col2.button("🧹 Clear Chat"):
     st.session_state.chat_history = []
 

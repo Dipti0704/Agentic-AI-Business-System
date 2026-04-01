@@ -1,4 +1,4 @@
-from core.utils import ollama_generate
+from core.utils import ollama_generate, ollama_stream
 
 # ===================== 🔥 NEW CODE =====================
 chat_history = []
@@ -13,18 +13,14 @@ class BaseAgent:
 
     def generate_response(self, user_input):
 
-        chat_history.append({"user": user_input})
-
-        context = "\n".join(
-            [f"User: {c['user']}" for c in chat_history[-5:] if "user" in c]
-        )
+        prompt = self.prompt_template.replace("{user_input}", user_input)
+        return ollama_generate(prompt)
         # ======================================================
 
-        prompt = self.prompt_template.replace("{user_input}", context)
+      
 
-        response = ollama_generate(prompt)
-
-        chat_history.append({"ai": response})
         # ======================================================
 
-        return response
+    def stream_response(self, user_input):
+        prompt = self.prompt_template.replace("{user_input}", user_input)
+        return ollama_stream(prompt)
