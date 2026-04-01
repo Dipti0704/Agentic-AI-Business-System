@@ -12,10 +12,13 @@ def ask_agent():
     data = request.json
     category = data.get("agent")
     question = data.get("question")
-    if not category or not question:
-        return jsonify({"error": "Missing agent or question"}), 400
+    if not question:
+        return jsonify({"error": "Missing question"}), 400
+
     response = manager.route_question(category, question)
+
     return jsonify({"response": response})
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
