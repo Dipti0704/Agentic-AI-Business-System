@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multi-Agent AI Tool</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Agentic AI Tool</h1>
+    <div>
+        <label>Agent:</label>
+        <select id="agent">
+            <option value="sales">Sales</option>
+            <option value="marketing">Marketing</option>
+            <option value="copywriting">Copywriting</option>
+            <option value="analytics">Analytics</option>
+        </select>
+    </div>
+    <div>
+        <label>Suggested Questions:</label>
+        <select id="suggested">
+            <option value="">-- Pick suggestion --</option>
+        </select>
+    </div>
+    <textarea id="question" placeholder="Type your question..."></textarea>
+    <button id="askBtn">Ask AI</button>
+    <div id="quickActions">
+        <button data-action="generate">Generate Ad Copy</button>
+        <button data-action="optimize">Optimize Campaign</button>
+        <button data-action="analytics">Show Analytics</button>
+    </div>
+    <div id="response"></div>
+    <button id="copyBtn">Copy Response</button>
+    <button id="downloadBtn">Download Response</button>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
