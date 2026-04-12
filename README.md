@@ -148,20 +148,5 @@ I have a medical shop. How can I increase sales?
 
 ## 👨‍💻 Author
 
-Adhav  
-AI Developer 🚀  
+Dipti
 
----
-
-## ⭐ Support
-
-If you like this project:
-- Star ⭐  
-- Share 🔗  
-- Connect 🤝  
-
----
-
-## 🔥 Tagline
-
-"This is not a chatbot. This is a Business AI System."
